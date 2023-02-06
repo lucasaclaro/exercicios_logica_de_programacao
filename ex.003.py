@@ -11,26 +11,34 @@ current_day = date.day
 
 
 date_of_birth = input('Digite a sua de nascimento (utilize o formato xx/xx/xxxx): ')
-print(date_of_birth)
 days = int(date_of_birth[0:2])
 months = int(date_of_birth[3:5])
 years = int(date_of_birth[6:])
 
-years_lived = current_year - years
-month_lived = current_month - months
-days_lived = current_day - days
-
 if current_month < months:
-    years_lived = years_lived - 1
+    total_years = (current_year - years - 1) * 360
+    total_months = current_month * 30
+    total_days = current_day
+    total = total_days + total_months + total_years
+elif current_month > months:
+    total_years = (current_year - years) * 360
+    total_months = (current_month - months) * 30
+    total_days = current_day - days
+    total = total_days + total_months + total_years
 elif current_month == months:
-    if current_day < days:
-        days_lived = current_day - days
+    if current_day > days:
+        total_years = (current_year - years - 1) * 360
+        total_months = (current_month - 1) * 30
+        total_days = days
+        total = total_days + total_months + total_years
+    elif current_day < days:
+        total_years = (current_year - years) * 360
+        total_months = (current_month - months) * 30
+        total_days = days - current_day
 
-print(years_lived)
-print(month_lived)
-print(days_lived)
+        total = total_days + total_months + total_years
+    elif current_day == days:
+        total = (current_year - years) * 360
 
 
-
-days_of_live = (years * 360) + (months * 30) + days
-print(f'Você viveu até o momento {days_of_live} dias.')
+print(f'Você viveu até hoje {total} dias.')
